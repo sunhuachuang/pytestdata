@@ -1,0 +1,3 @@
+/main/cache/sql/*
+/main/cache/password
+/__pycache__/
