@@ -1,0 +1,19 @@
+{% extends "table_index.html" %}
+
+{% block container %}
+  <h3>{{ table }}</h3>
+  {% if get_flashed_messages() %}
+    <div class="alert alert-warning">
+      {{ get_flashed_messages()[0] }}
+    </div>
+  {% endif %}
+  <div class="row">
+    <h4><strong>&nbsp;&nbsp;&nbsp;rows number:</strong> {{ number }}</h4>
+    <div class="col-md-2 col-md-offset-2">
+      <a class="btn btn-primary btn-block" href="{{ url_for('table', sql=sql, database=database, name=table) }}">Start Create Data</a>
+    </div>
+    <div class="col-md-2 col-md-offset-1">
+      <a class="btn btn-danger btn-block" href="{{ url_for('delete', sql=sql, database=database, table=table) }}">Delete All Rows</a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block container %}
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4 text-center" style="padding-top: 1em;">
+      <a class="btn btn-info btn-lg btn-block" href="{{ url_for('login', sql='mysql') }}">mysql</a>
+    </div>
+    <div class="col-md-4 col-md-offset-4 text-center" style="padding-top: 1em;">
+      <a class="btn btn-info btn-lg btn-block" href="{{ url_for('login', sql='mysql') }}">mysql</a>
+    </div>
+    <div class="col-md-4 col-md-offset-4 text-center" style="padding-top: 1em;">
+      <a class="btn btn-info btn-lg btn-block" href="{{ url_for('login', sql='sql') }}">sql</a>
+    </div>
+    <div class="col-md-4 col-md-offset-4 text-center" style="padding-top: 1em;">
+      <a class="btn btn-info btn-lg btn-block" href="{{ url_for('login', sql='sqlite') }}">sqlite</a>
+    </div>
+  </div>
+{% endblock %}

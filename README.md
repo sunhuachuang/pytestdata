@@ -2,8 +2,8 @@
 random data only for test build by python3 and flask.  support mysql, sqlite...(wait others)
 
 # what is killer ?
-1. it can auto judge what message you needed by your table fields.  
-2. it can custom change the judgment.  
+1. it can auto analyze what message you needed by your table fields.  
+2. it can custom change the analysis.  
 3. it can save the result for next use.  
 4. it will support many sql server or nosql.
 

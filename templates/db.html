@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block container %}
+  <div class="row">
+    <h2 class="text-center text-info">databases</h2>
+    {% for database in databases %}
+    <div class="col-md-4 col-md-offset-4 text-center" style="padding-top: 1em;">
+      <a class="btn btn-default btn-lg btn-block" href="{{ url_for('index', sql=sql, database=database) }}"><span class="text-info">{{ database }}</span></a>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
