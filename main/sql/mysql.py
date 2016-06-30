@@ -56,6 +56,17 @@ def count_table(params, database, table):
         connect.close()
     return results['count(*)']
 
+def insert_data(params, database, table, data):
+    connect =  __connect(params, database)
+    try:
+        with connect.cursor() as cursor:
+            query = 'insert into' + table;
+            cursor.execute("select count(*) FROM "+table)
+            results = cursor.fetchone()
+    finally:
+        connect.close()
+    return results
+
 def __connect(params, database=None):
     return pymysql.connect(host=params['host'],
                            port=int(params['port']),

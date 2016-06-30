@@ -1,3 +1,5 @@
+# use flask to control the web.
+
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import main.db
 
@@ -54,8 +56,8 @@ def table_index():
 @app.route('/<sql>/<database>/<name>', methods=['GET', 'POST'])
 def table(sql, database, name):
     if request.method == 'POST':
-        #print(request.form['fields'])
-        success_number, failure_number = main.db.insert(sql, session['sql'], database, name, request.form)
+        fields = flask_format_form(request.form)
+        success_number, failure_number = main.db.insert(sql, session['sql'], database, name, fields)
         flash('successed ' + str(success_number) + ', failured ' + str(failure_number))
         return redirect(url_for('table_show', sql=sql, database=database, table=name))
     fields = main.db.analyze_table(sql, session['sql'], database, name)
@@ -73,6 +75,18 @@ def delete(sql, database, table):
     main.db.delete(sql, session['sql'], database, table)
     flash('you have delete all rows!')
     return redirect(url_for('table_show', sql=sql, database=database, table=table))
+
+def flask_format_form(form_fields):
+    fields = {}
+    for field in form_fields.items():
+        name = field[0]
+        value = field[1]
+        names = name.split('.', 1)
+        if names[0] in fields:
+            fields[names[0]][names[1]] = value
+        else:
+            fields[names[0]] = {names[1]: value}
+    return fields
 
 if __name__ == '__main__':
     app.run()

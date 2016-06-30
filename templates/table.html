@@ -18,9 +18,9 @@
       <tbody>
         {% for index, field in fields %}
           <tr>
-            <td>{{ field['name'] }}<input type="hidden" value="{{ field['name'] }}" name="fields[{{ index }}][name]"/></td>
+            <td>{{ field['name'] }}<input type="hidden" value="{{ field['name'] }}" name="{{ index }}.name"/></td>
             <td>
-              <select id="typeSelect" class="form-control" data-value="{{ field['type'] }}" name="fields[{{ index }}][type]">
+              <select class="form-control typeSelect" data-value="{{ field['type'] }}" name="{{ index }}.type">
                 <option value="username">username</option>
                 <option value="companyname">companyName</option>
                 <option value="goodname">goodName</option>
@@ -41,24 +41,24 @@
                 <option value="foreignkey">foreign key</option>
               </select>
             </td>
-            <td><input type="number" class="form-control" value="{{ field['min'] }}"       name="fields[{{ index }}][min]"/></td>
-            <td><input type="number" class="form-control" value="{{ field['max'] }}"       name="fields[{{ index }}][max]"/></td>
-            <td><input type="text" class="form-control" value="{{ field['default'] }}"     name="fields[{{ index }}][default]"/></td>
+            <td><input type="number" class="form-control" value="{{ field['min'] }}"       name="{{ index }}.min" /></td>
+            <td><input type="number" class="form-control" value="{{ field['max'] }}"       name="{{ index }}.max" /></td>
+            <td><input type="text" class="form-control" value="{{ field['default'] }}"     name="{{ index }}.default"/></td>
             <td>
               <label class="checkbox-inline">
-                <input type="checkbox" name="fields[{{ index }}][nullable]"
+                <input type="checkbox" name="{{ index }}.nullable"
                        {% if field['nullable'] == True %}checked{% endif %}/>
               </label>
             </td>
             <td>
               <label class="checkbox-inline">
-                <input type="checkbox" name="fields[{{ index }}][unique]"
+                <input type="checkbox" name="{{ index }}.unique"
                        {% if field['unique'] == True %}checked{% endif %}/>
               </label>
             </td>
-            <td><input type="text" class="form-control" value="{{ field['foreign_key'] }}" name="fields[{{ index }}][foreign_key]"/></td>
+            <td><input type="text" class="form-control" value="{{ field['foreign_key'] }}" name="{{ index }}.foreign_key"/></td>
             <td>
-              <select id="langSelect" class="form-control" data-value="{{ field['language'] }}" name="fields[{{ index }}][language]">
+              <select class="form-control langSelect" data-value="{{ field['language'] }}" name="{{ index }}.language">
                 <option value="en">en</option>
                 <option value="zh_cn">中文</option>
                 <option value="jp">日本語</option>
@@ -80,10 +80,10 @@
 <script src="/static/jquery.min.js"></script>
 <script type="text/javascript">
   $(function() {
-    $('#typeSelect').val(function(){
+    $('.typeSelect').val(function(){
       return $(this).data("value");
     });
-    $('#langSelect').val(function(){
+    $('.langSelect').val(function(){
       return $(this).data("value");
     });
   })

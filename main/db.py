@@ -45,8 +45,11 @@ def execute(sql, params, query):
 # create format query for insert
 # @params sql_name(str), params({}), table_name(str), fields([{}])
 # @return tuple (success_number, failure_number)
-def insert(sql, params, database, table, fields):
-    return 10, 2
+def insert(sql, params, database, table, fields, number):
+    new_fields = main.custom.custom_fields(sql, database, table, fields)
+    data = main.action.create_data(new_fields, number)
+    sqlpackage = __initsql(sql)
+    return sqlpackage.insert_data(params, database, table, data)
 
 # create format query for delete
 # @params sql_name(str), params({}), database(str), table_name(str)
