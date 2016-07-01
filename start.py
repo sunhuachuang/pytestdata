@@ -56,9 +56,11 @@ def table_index():
 @app.route('/<sql>/<database>/<name>', methods=['GET', 'POST'])
 def table(sql, database, name):
     if request.method == 'POST':
+        number = int(request.args.get('number'))
         fields = flask_format_form(request.form)
-        success_number, failure_number = main.db.insert(sql, session['sql'], database, name, fields)
-        flash('successed ' + str(success_number) + ', failured ' + str(failure_number))
+        pre_rows = int(main.db.count_table(sql, session['sql'], database, name))
+        rows = int(main.db.insert(sql, session['sql'], database, name, fields, number))
+        flash('successed ' + str(rows - pre_rows) + ', failured ' + str(number + pre_rows - rows))
         return redirect(url_for('table_show', sql=sql, database=database, table=name))
     fields = main.db.analyze_table(sql, session['sql'], database, name)
     return render_template('table.html', sql=sql, database=database, table=name, fields=enumerate(fields))

@@ -57,15 +57,19 @@ def count_table(params, database, table):
     return results['count(*)']
 
 def insert_data(params, database, table, data):
+    field_names, field_values = data
     connect =  __connect(params, database)
     try:
         with connect.cursor() as cursor:
-            query = 'insert into' + table;
-            cursor.execute("select count(*) FROM "+table)
-            results = cursor.fetchone()
+            query = 'insert into ' + table + ' (' + ','.join(field_names) + ') values ({});';
+            query_sql = ''
+            for field_value in field_values:
+                query_sql += query.format(','.join(map(lambda x: "'" + str(x) + "'", field_value)))
+            cursor.execute(query_sql)
+            connect.commit()
     finally:
         connect.close()
-    return results
+    return count_table(params, database, table)
 
 def __connect(params, database=None):
     return pymysql.connect(host=params['host'],

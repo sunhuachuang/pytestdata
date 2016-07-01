@@ -2,7 +2,7 @@
 
 {% block container %}
   <h3>{{ table }} <small><a href="{{ url_for('table_show', sql=sql, database=database, table=table) }}">click to show</a></small></h3>
-  <form method="post" name="table">
+  <form method="post" name="table" id="form">
     <table class="table">
       <thead>
         <th>Name</th>
@@ -69,8 +69,11 @@
       </tbody>
     </table>
     <div class="row">
-      <div class="col-md-2 col-md-offset-5">
-        <button class="btn btn-primary btn-block" type="submit">Create Data</button>
+      <div class="col-md-2 col-md-offset-2">
+        <input type="number" class="form-control" id="createnumber" placeholder="input create number"/>
+      </div>
+      <div class="col-md-2 col-md-offset-1">
+        <a class="btn btn-primary btn-block" id="submit">Create Data</a>
       </div>
     </div>
   </form>
@@ -80,11 +83,22 @@
 <script src="/static/jquery.min.js"></script>
 <script type="text/javascript">
   $(function() {
+    var url = '{{ url_for('table', sql=sql, database=database, name=table) }}';
     $('.typeSelect').val(function(){
       return $(this).data("value");
     });
     $('.langSelect').val(function(){
       return $(this).data("value");
+    });
+    $('#submit').click(function(e) {
+      e.preventDefault();
+      var number = $('#createnumber').val();
+      if (!number) {
+        alert('input create number!');
+      } else {
+        new_url = url + '?number=' + number;
+        $('#form').attr('action', new_url).submit();
+      }
     });
   })
 </script>

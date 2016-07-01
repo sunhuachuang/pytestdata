@@ -10,17 +10,6 @@ def connect_check(sql, params):
         except ImportError:
             return 'you need install pymysql (pip install PyMySQL)'
 
-def __connect():
-    pass
-
-def __close():
-    pass
-
-def __initsql(sql):
-    if sql == 'mysql':
-        import main.sql.mysql
-        return main.sql.mysql
-
 # get all databases
 # @params sql_name(str), params({})
 # @return []
@@ -44,7 +33,7 @@ def execute(sql, params, query):
 
 # create format query for insert
 # @params sql_name(str), params({}), table_name(str), fields([{}])
-# @return tuple (success_number, failure_number)
+# @return now_rows_number
 def insert(sql, params, database, table, fields, number):
     new_fields = main.custom.custom_fields(sql, database, table, fields)
     data = main.action.create_data(new_fields, number)
@@ -69,3 +58,8 @@ def analyze_table(sql, params, database, table):
 def count_table(sql, params, database, table):
     sqlpackage = __initsql(sql)
     return sqlpackage.count_table(params, database, table)
+
+def __initsql(sql):
+    if sql == 'mysql':
+        import main.sql.mysql
+        return main.sql.mysql
