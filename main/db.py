@@ -36,7 +36,7 @@ def execute(sql, params, query):
 # @return now_rows_number
 def insert(sql, params, database, table, fields, number):
     new_fields = main.custom.custom_fields(sql, database, table, fields)
-    data = main.action.create_data(new_fields, number)
+    data = main.action.create_data(new_fields, number) #TODO
     sqlpackage = __initsql(sql)
     return sqlpackage.insert_data(params, database, table, data)
 
