@@ -65,7 +65,6 @@ def insert_data(params, database, table, data):
             query_sql = ''
             for field_value in field_values:
                 query_sql += query.format(','.join(map(lambda x: "'" + str(x) + "'", field_value)))
-            print(query_sql)
             cursor.execute(query_sql)
             connect.commit()
     finally:

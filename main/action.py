@@ -29,9 +29,7 @@ def create_data(fields, number):
         else:
             field_store_values[field_name] = []
 
-        if field_lang == 'en':
-            import main.langs.en
-            lang = main.langs.en
+        lang = getattr(__import__('main.langs', fromlist=[field_lang]), field_lang)
 
         while len(field_store_values[field_name]) < number:
             value = create_function(field_min, field_max, lang)
@@ -40,10 +38,10 @@ def create_data(fields, number):
             else:
                 field_store_values[field_name].append(value)
 
-    field_values = __format(field_store_values)
+    field_values = __format(field_names, field_store_values, number)
     return field_names, field_values
 
-def get_create_function(field_type):
+def get_create_function(field_type): #TODO
     # true name
     def __get_name(min_value, max_value, lang):
         first_name = random.choice(lang.first_name)
@@ -54,14 +52,16 @@ def get_create_function(field_type):
     def __get_age(min_value, max_value, lang):
         return random.randrange(min_value, max_value+1, 2)
 
-    if field_type == 'name':
-        return __get_name
-    elif field_type == 'age':
-        return __get_age
+    return eval("__get_" + field_type)
 
-
-
-
-def __format(field_store_values):
+# @param [], {'': [], '': set()...}, int
+# @return [[,], [,] ...]
+def __format(field_names, field_store_values, number):
     field_values = []
+    l = len(field_names)
+    for i in range(number):
+        field_value = []
+        for i in range(l):
+            field_value.append(field_store_values[field_names[i]].pop())
+        field_values.append(field_value)
     return field_values
